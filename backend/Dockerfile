@@ -26,4 +26,4 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
 # Start Laravel server on the port provided by Railway
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=8000"]
