@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    // Static storage for assignment constraints (resets per server cycle in traditional PHP config, 
-    // although PHP's execution model per-request actually resets statics. Since this represents 
-    // a mock database for the exercise, we implement it as intended in the PRD).
-    private static $tasks = [
-        ['id' => 1, 'title' => 'Learn Laravel', 'completed' => true, 'createdAt' => '2023-10-01T12:00:00Z'],
-        ['id' => 2, 'title' => 'Build Task Manager', 'completed' => false, 'createdAt' => '2023-10-02T12:00:00Z']
-    ];
-    private static $nextId = 3;
-
     public function index()
     {
-        return response()->json(self::$tasks, 200);
+        return response()->json(Task::all(), 200);
     }
 
     public function store(Request $request)
@@ -26,14 +18,10 @@ class TaskController extends Controller
             'title' => 'required|string|max:255'
         ]);
 
-        $task = [
-            'id' => self::$nextId++,
+        $task = Task::create([
             'title' => trim($validated['title']),
-            'completed' => false,
-            'createdAt' => now()->toIso8601String()
-        ];
-
-        self::$tasks[] = $task;
+            'completed' => false
+        ]);
 
         return response()->json($task, 201);
     }
@@ -44,25 +32,28 @@ class TaskController extends Controller
             'completed' => 'required|boolean'
         ]);
 
-        foreach (self::$tasks as &$task) {
-            if ($task['id'] == $id) {
-                $task['completed'] = $validated['completed'];
-                return response()->json($task, 200);
-            }
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
         }
 
-        return response()->json(['error' => 'Task not found'], 404);
+        $task->completed = $validated['completed'];
+        $task->save();
+
+        return response()->json($task, 200);
     }
 
     public function destroy($id)
     {
-        foreach (self::$tasks as $key => $task) {
-            if ($task['id'] == $id) {
-                array_splice(self::$tasks, $key, 1);
-                return response()->json(['message' => 'Deleted'], 200);
-            }
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
         }
 
-        return response()->json(['error' => 'Task not found'], 404);
+        $task->delete();
+
+        return response()->json(['message' => 'Deleted'], 200);
     }
 }
