@@ -104,8 +104,6 @@ The frontend will run at `http://localhost:5173`
 - **Frontend:** Deployed on [Vercel](https://task-manager-five-brown-54.vercel.app/)
 - **Backend:** Deployed on [Railway](https://task-manager-production-fa98.up.railway.app/)
 
-> Update the base URL in `frontend/src/api/tasks.js` to point to your deployed backend URL before redeploying the frontend.
-
 ---
 
 ## Assumptions & Trade-offs
