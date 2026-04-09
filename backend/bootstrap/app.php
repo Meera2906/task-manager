@@ -12,10 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Force wildcard CORS on all API routes so errors don't trigger CORS blocks
-        $middleware->api(prepend: [
-            \Illuminate\Http\Middleware\HandleCors::class,
-        ]);
+        // Trust all proxies (Required for Railway/Vercel)
+        $middleware->trustProxies(at: '*');
+        
+        // Ensure CORS is global and prepended
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
