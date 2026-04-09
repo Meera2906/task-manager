@@ -1,4 +1,3 @@
-```markdown
 # Task Manager
 
 A simple full stack Task Manager application built with Laravel (PHP) and React.
@@ -102,8 +101,8 @@ The frontend will run at `http://localhost:5173`
 
 ## Deployment
 
-- **Frontend:** Deployed on [Vercel](https://task-manager-yourname.vercel.app)
-- **Backend:** Deployed on [Railway](https://task-manager-backend.up.railway.app)
+- **Frontend:** Deployed on [Vercel](https://task-manager-five-brown-54.vercel.app/)
+- **Backend:** Deployed on [Railway](https://task-manager-production-fa98.up.railway.app/)
 
 > Update the base URL in `frontend/src/api/tasks.js` to point to your deployed backend URL before redeploying the frontend.
 
@@ -123,19 +122,35 @@ The frontend will run at `http://localhost:5173`
 
 ```
 task-manager/
-├── backend/
-│   ├── app/Http/Controllers/TaskController.php
-│   ├── routes/api.php
-│   └── config/cors.php
-├── frontend/
+├── backend/                 # deployed using Railway
+│   ├── app/
+│   ├── bootstrap/
+│   ├── config/
+│   ├── database/
+│   │   ├── migrations/
+│   │   └── seeders/
+│   ├── public/
+│   │   └── index.php
+│   ├── resources/
+│   ├── routes/
+│   │   └── api.php
+│   ├── storage/
+│   ├── tests/
+│   ├── artisan
+│   ├── composer.json
+│   ├── phpunit.xml
+│   ├── Dockerfile          # optional
+│   ├── .env                # backend env
+│   └── README.md
+│
+├── frontend/               # deployed using Vercel
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── api/tasks.js
-│   │   └── components/
-│   │       ├── TaskForm.jsx
-│   │       ├── TaskList.jsx
-│   │       ├── TaskItem.jsx
-│   │       └── FilterBar.jsx
-└── README.md
-```
+│   ├── public/           
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── .env                # frontend env
+│
+├── README.md
+└── .gitignore
 ```
