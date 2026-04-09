@@ -20,7 +20,7 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/database
 
-RUN php artisan config:clear && php artisan cache:clear
+RUN php artisan config:clear
 
 RUN php artisan migrate --force
 
