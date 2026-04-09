@@ -1,4 +1,4 @@
-const API_URL = "https://task-manager-production-fa98.up.railway.app/api/tasks";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/tasks";
 
 export const getTasks = async () => {
   const response = await fetch(API_URL, {
